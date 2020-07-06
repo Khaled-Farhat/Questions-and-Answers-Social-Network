@@ -64,6 +64,7 @@ public:
 	std::vector<std::shared_ptr<IQuestion>> getUserQuestions(const std::string&) const; // takes username; returns vecotr of IQuestion objects
 	void answerQuestion(const std::string&, int, const std::string&); // takes username, question id and answer; implements: user answers question
 	void removeQuestion(const std::string&, int); // takes username and question id; remove question
+	void followUser(const std::string&, const std::string&); // takes usernames of the first and second user and add the second user to the friends of the first user
 
 private:
 	std::vector<std::shared_ptr<Account>> accounts;
