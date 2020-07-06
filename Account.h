@@ -46,7 +46,8 @@ public:
 	void answerQuestion(int, const std::string&); // takes question id and questoin answer; implements: user answers question
 	void removeQuestion(int); // takes question id; remove question from questions inbox list
 	void addAnswerNotification(std::shared_ptr<Notification>); // if user answered my question; add notificatin
-	
+	void followUser(std::shared_ptr<Account>); // takes a pointer to account and adds that accounts to the friends list
+
 private:
 	std::vector<std::shared_ptr<Account>> friends;
 	std::vector<std::shared_ptr<Account>> blockedAccounts;
