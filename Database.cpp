@@ -419,3 +419,10 @@ shared_ptr<Country> Database::getCountry(const string& countryName) const {
 
 	return nullptr;
 }
+
+// follow user
+void Database::followUser(const string& firstUsername, const string& secondUsername) {
+	shared_ptr<Account> firstUserPtr = getAccount(firstUsername);
+	shared_ptr<Account> secondUserPtr = getAccount(secondUsername);
+	firstUserPtr->followUser(secondUserPtr);
+}
