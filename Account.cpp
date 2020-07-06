@@ -302,3 +302,8 @@ void Account::addLikeNotification(shared_ptr<Notification> notification) {
 void Account::addAnswerNotification(shared_ptr<Notification> notification) {
 	answersNotifications.push_back(notification);
 }
+
+// follow user
+void Account::followUser(shared_ptr<Account> user) {
+	friends.push_back(user);
+}
