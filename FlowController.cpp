@@ -30,7 +30,7 @@ enum class ViewAnswerOption { LIKE = 1, REWARD, THREAD, SHOWLIKES, SHOWREWARDS, 
 enum class ViewPeopleOption { MORE = 1, VIEW, BACK };
 
 // enumeration constants represent view profile menu options
-enum class ViewProfileOption { ASK = 1, LATEST, TOP, BACK, BLOCK };
+enum class ViewProfileOption { ASK = 1, FOLLOW, LATEST, TOP, BACK, BLOCK };
 
 // enumeration constants represent view thread menu options
 enum class ViewThreadOption { ASK = 1, SHOW, BACK };
@@ -125,7 +125,7 @@ void FlowController::run() {
 void FlowController::askFriends(const string& question) {
 	// ask openly or anonymously
 	vector<string> questionTypeMenu{ "Ask openly", "Ask anonymously" };
-	cout << "\nAsk openly and get + 5 coins for each answer you’ll receive.Ask openly?";
+	cout << "\nAsk openly and get + 5 coins for each answer youâ€™ll receive.Ask openly?";
 	displayMenu(questionTypeMenu);
 
 	int choice = inputInteger(1, 2);
@@ -330,7 +330,7 @@ void FlowController::viewAnswer(shared_ptr<IAnswer> answer) {
 
 			case ViewAnswerOption::REWARD: // reward answer
 				if (database.rewardAnswer(currentUsername, user, answerId) == false) {
-					cout << "\nYou’re out of coins :( Answer and earn more!";
+					cout << "\nYouâ€™re out of coins :( Answer and earn more!";
 				}
 
 				break;
@@ -445,8 +445,8 @@ void FlowController::viewProfile(const string& username) {
 	shared_ptr<IAccount> account = database.getProfileInfo(username);
 	cout << "\n" << *account;
 
-	vector<string> viewProfileMenu{ "Ask", "Show latest answers", "Show top answers", "Back", "Block this user" };
-	int optionsCount{ 5 };
+	vector<string> viewProfileMenu{ "Ask", "Follow", "Show latest answers", "Show top answers", "Back", "Block this user" };
+	int optionsCount{ 6 };
 	bool userExited{ false };
 
 	if (username == currentUsername) {
@@ -480,7 +480,7 @@ void FlowController::viewProfile(const string& username) {
 
 				// ask openly or anonymously
 				vector<string> questionTypeMenu{ "Ask openly", "Ask anonymously" };
-				cout << "\nAsk openly and get + 5 coins for each answer you’ll receive.Ask openly?";
+				cout << "\nAsk openly and get + 5 coins for each answer youâ€™ll receive.Ask openly?";
 				displayMenu(questionTypeMenu);
 				int choice = inputInteger(1, 2);
 				QuestionType questionType = static_cast<QuestionType>(choice);
@@ -489,6 +489,17 @@ void FlowController::viewProfile(const string& username) {
 				cout << "\nSuccessfully asked the question.";
 				break;
 			}
+
+			case ViewProfileOption::FOLLOW: // follow user
+				if (username == currentUsername) {
+					cout << "You cannot follow yourself!\n";
+				}
+				else {
+					database.followUser(currentUsername, username);
+					cout << "Successfully followed " << username << "\n";
+				}
+
+				break;
 
 			case ViewProfileOption::LATEST: { // show latest answers
 				vector < shared_ptr<IAnswer>> latestAnswers = database.getProfileLatestAnswers(username);
@@ -550,7 +561,7 @@ void FlowController::viewThread(const string& username, int threadID) {
 
 			// ask openly or anonymously
 			vector<string> questionTypeMenu{ "Ask openly", "Ask anonymously" };
-			cout << "\nAsk openly and get + 3 coins for each answer you’ll receive.Ask openly?";
+			cout << "\nAsk openly and get + 3 coins for each answer youâ€™ll receive.Ask openly?";
 			displayMenu(questionTypeMenu);
 
 			choice = inputInteger(1, 2);
