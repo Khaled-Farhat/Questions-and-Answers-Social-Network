@@ -1,6 +1,6 @@
-# Console Implementation of AskFm
+# Questions and Answers Social Network
 
- A social networking project where users ask each other questions.
+ A social networking object oriented project where users ask each other questions.
 
 Functionality:
 - ask / answer questions.
