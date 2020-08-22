@@ -14,6 +14,7 @@
 #include <tuple>
 #include <algorithm>
 #include <stack>
+#include <unordered_map>
 
 using namespace std;
 
@@ -61,7 +62,7 @@ void Database::createAccount(const string& username, const string& password, con
 		interests[interestsList[i]].push_back(accountPtr);
 	}
 
-	accounts.push_back(accountPtr);
+	accounts[username] = accountPtr;
 }
 
 // takes username and password; returns true if username and password are correct
@@ -400,13 +401,12 @@ void Database::removeQuestion(const string& username, int questionID) {
 
 // returns a pointer to Account object; returns nullptr if not found
 shared_ptr<Account> Database::getAccount(const string& username) const {
-	for (size_t i{ 0 }; i < accounts.size(); ++i) {
-		if (accounts[i]->getUsername() == username) {
-			return accounts[i];
-		}
+	if (accounts.count(username)) {
+		return accounts.at(username);
 	}
-
-	return nullptr;
+	else {
+		return nullptr;
+	}
 }
 
 // returns a pointer to Country object; returns nullptr if not found
