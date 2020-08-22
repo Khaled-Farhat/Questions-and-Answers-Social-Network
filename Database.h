@@ -14,7 +14,7 @@
 #include <memory>
 #include <tuple>
 #include <stack>
-#include <map>
+#include <unordered_map>
 
 // enumeration constants represent question type
 enum class QuestionType { OPENLY = 1, ANONYMOUSLY };
@@ -67,9 +67,9 @@ public:
 	void followUser(const std::string&, const std::string&); // takes usernames of the first and second user and add the second user to the friends of the first user
 
 private:
-	std::vector<std::shared_ptr<Account>> accounts;
+	std::unordered_map<std::string, std::shared_ptr<Account>> accounts;
 	std::vector<std::shared_ptr<Country>> countries;
-	std::map<std::string, std::vector<std::shared_ptr<Account>>> interests;
+	std::unordered_map<std::string, std::vector<std::shared_ptr<Account>>> interests;
 	int questionsCount{ 0 };
 
 	std::shared_ptr<Account> getAccount(const std::string&) const; // takes username; returns a pointer to Account object; returns nullptr if not found
